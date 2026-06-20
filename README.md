@@ -13,9 +13,14 @@ Open the link to the website in a browser, and record your daily experiences in 
 ## Features
 
 - Digital diary
-- Aesthetics of a real diary
-- you can write everyday forever!
-- you can look back at your writing
+- Aesthetics of a real diary (book like cover and lined pages, as well the page turning animations)
+- Two page spread with live date and day
+- Autosave while typing (when run locally), you can look back at your writing
+
+## Limitations/ Things to work on for the future
+
+Currently, it doesn't save the thing that you write in the diary. When you refresh the page, the content goes away. That's a serious limitation because people usually tend to close the tab once they're done writing, so it would be better if it saved.
+Initially it saved locally and I could view what I was writing in a json file, and it also saved when I refreshed (I was on localhost), but I had to remove it because I can't deploy with that on vercel.
 
 ## Coding Languages
 
@@ -34,8 +39,3 @@ https://a-quiet-corner-f5db.vercel.app
 - Deployment: I used AI to deploy my website on vercel, I used to use netlify if it was only a single HTML file, but now since I have flask, I had to figure out how to deploy it.
   I added these files: requirements.txt and vercel.json based on the instructions from coding assistant, and it enabled me to successfully deploy this website.
 - Some Technical stuff: like how to mimic the book opening and page turning animation, and things related to that.
-
-## Limitations/ Things to work on for the future
-
-Currently, it doesn't save the thing that you write in the diary. When you refresh the page, the content goes away. That's a serioud limitation because people usually tend to close the tab once they're done writing, so it would be better if it saved.
-Initially it saved locally and I could view what i was writing in a json file, and it also saved when i refershed (i was on localhost), but I had to remove it because I can't deploy with that on vercel.
