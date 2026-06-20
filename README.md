@@ -15,12 +15,18 @@ Open the link to the website in a browser, and record your daily experiences in 
 - Digital diary
 - Aesthetics of a real diary (book like cover and lined pages, as well the page turning animations)
 - Two page spread with live date and day
-- Autosave while typing (when run locally), you can look back at your writing
+- Autosave while typing, entries save autimatically as you write, and you can look back at your writing whenever you visit the website
+- Date based navigation: flip through previous and next pages
 
-## Limitations/ Things to work on for the future
+## How saving works (new)
 
-Currently, it doesn't save the thing that you write in the diary. When you refresh the page, the content goes away. That's a serious limitation because people usually tend to close the tab once they're done writing, so it would be better if it saved.
-Initially it saved locally and I could view what I was writing in a json file, and it also saved when I refreshed (I was on localhost), but I had to remove it because I can't deploy with that on vercel.
+Entries are saved in your browser using local storage, so your writing stays even when you refresh or close the diary, and it doesn't require any account.
+
+## Future improvements
+
+- User accounts so that entries sync across devices
+- pdf export of your writings
+- improve design aesthetics by adding more themes and dark mode.
 
 ## Coding Languages
 
@@ -39,3 +45,4 @@ https://a-quiet-corner-f5db.vercel.app
 - Deployment: I used AI to deploy my website on vercel, I used to use netlify if it was only a single HTML file, but now since I have flask, I had to figure out how to deploy it.
   I added these files: requirements.txt and vercel.json based on the instructions from coding assistant, and it enabled me to successfully deploy this website.
 - Some Technical stuff: like how to mimic the book opening and page turning animation, and things related to that.
+- Persistence fix: After initial feedback, I used AI to add local storage so that entries in the browser persist.
