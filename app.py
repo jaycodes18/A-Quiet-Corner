@@ -1,23 +1,26 @@
-from flask import Flask, render_template, request, redirect, url_for, jsonify
+from flask import Flask, render_template, request, jsonify
 import json
 import os
-import re
 from datetime import datetime, timedelta
 
 app = Flask(__name__)
 DATA_FILE = "diary_entries.json"
-DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+DATA_KEY = "diary_entries"
 
-def parse_date(date_str):
-    if not date_str or not DATE_RE.match(date_str):
-        return None
+# Vercel KV in production, local JSON file when developing
+redis = None
+if os.environ.get("KV_REST_API_URL"):
     try:
-        return datetime.strptime(date_str, "%Y-%m-%d")
-    except ValueError:
-        return None
-
+        import importlib
+        Redis = importlib.import_module("upstash_redis").Redis
+        redis = Redis.from_env()
+    except (ImportError, AttributeError):
+        redis = None
 
 def load_entries():
+    if redis:
+        data = redis.get(DATA_KEY)
+        return json.loads(data) if data else {}
     if os.path.exists(DATA_FILE):
         with open(DATA_FILE, "r") as f:
             try:
@@ -27,6 +30,9 @@ def load_entries():
     return {}
 
 def save_entries(entries):
+    if redis:
+        redis.set(DATA_KEY, json.dumps(entries))
+        return
     with open(DATA_FILE, "w") as f:
         json.dump(entries, f, indent=4)
 
@@ -42,24 +48,20 @@ def get_pages():
     try:
         date_obj = datetime.strptime(target_date_str, "%Y-%m-%d")
     except ValueError:
-        return jsonify({"error": "invalid date format"}), 400    
+        return jsonify({"error": "invalid date format"}), 400
+
     entries = load_entries()
-    
-    date_obj = datetime.strptime(target_date_str, "%Y-%m-%d")
     next_date_obj = date_obj + timedelta(days=1)
     next_date_str = next_date_obj.strftime("%Y-%m-%d")
-    
-    left_header = date_obj.strftime("%A, %B %d, %Y")
-    right_header = next_date_obj.strftime("%A, %B %d, %Y")
-    
-    return {
+
+    return jsonify({
         "left_date": target_date_str,
-        "left_header": left_header,
+        "left_header": date_obj.strftime("%A, %B %d, %Y"),
         "left_content": entries.get(target_date_str, ""),
         "right_date": next_date_str,
-        "right_header": right_header,
+        "right_header": next_date_obj.strftime("%A, %B %d, %Y"),
         "right_content": entries.get(next_date_str, "")
-    }
+    })
 
 @app.route('/write', methods=['POST'])
 def write():
@@ -80,7 +82,6 @@ def write():
             entries.pop(date_str, None)
 
     entries.pop("", None)
-
     save_entries(entries)
     return jsonify({"status": "success"})
 
