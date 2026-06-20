@@ -4,7 +4,7 @@ It is a digital diary that mimics a physical notebook where people record their 
 
 ## Preview
 
-![Closed diary cover](https://cdn.discordapp.com/attachments/1517653758970953850/1517785462222094407/image.png?ex=6a378b5d&is=6a3639dd&hm=660cde48db11f454925fdc3bfa592025fe4067df69f9a055933e6c82aaa1ebcd)
+![Closed diary cover](https://cdn.discordapp.com/attachments/1517653758970953850/1517788290848133221/image.png?ex=6a378dff&is=6a363c7f&hm=8846f0f169311e71735a172d848faced2b0a6a41610d950250d1d0576e2997ca)
 ![Open diary cover](https://cdn.discordapp.com/attachments/1517653758970953850/1517784378468597812/image.png?ex=6a378a5a&is=6a3638da&hm=e87bb43d9e84f6ffe4dc2be39c7e2814b119e0b8bd8a025feb9f486fed25d3c9)
 ## How to use it
 
