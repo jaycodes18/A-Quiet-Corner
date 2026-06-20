@@ -240,6 +240,29 @@
         let currentLeftDate = null;
         let autosaveTimeout = null;
 
+        const STORAGE_KEY = "quiet_corner_entries";
+
+        function getLoaclEntries() {
+            try {
+                return JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}")
+            } catch {
+                return {};
+            }
+        }
+
+        function saveLocalEntry(date, content) {
+            if (!date) return;
+            const entries = getLoaclEntries();
+            const trimmed = content.trim();
+            if (trimmed) {
+                entries[date] = trimmed;
+            }
+            else {
+                delete entries[date];
+            }
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+        }
+
         function openDiary() {
             document.getElementById("coverState").style.display = "none";
             document.getElementById("bookState").style.display = "block";
@@ -271,9 +294,9 @@
 
                     document.getElementById("leftDateHeader").textContent = data.left_header;
                     document.getElementById("rightDateHeader").textContent = data.right_header;
-                    
-                    document.getElementById("leftText").value = data.left_content || "";
-                    document.getElementById("rightText").value = data.right_content || "";
+                    const local = getLoaclEntries();
+                    document.getElementById("leftText").value = local[data.left_date] ?? data.left_content ?? "";
+                    document.getElementById("rightText").value = local[data.right_date] ?? data.right_content ?? "";
                     
                     currentLeftDate = new Date(data.left_date + "T00:00:00");
                 })
@@ -281,15 +304,19 @@
         }
 
         function saveCurrentProgress() {
-            const form = document.getElementById("diaryForm");
+            const leftDate = document.getElementById("leftDateMarker").value;
+            const rightDate = document.getElementById("rightDateMarker").value;
+            const leftContent = document.getElementById("leftText").value;
+            const rightContent = document.getElementById("rightText").value;
 
-            return fetch('/write', {
-                method: 'POST',
-                body: new FormData(form)
-            })
-            .catch(error => {
-                console.error("Autosave backend communication error:", error);
-            });
+            if (!leftDate && !rightDate) {
+                return Promise.resolve();
+            }
+
+            saveLocalEntry(leftDate, leftContent);
+            saveLocalEntry(rightDate, rightContent);
+
+            return Promise.resolve();
         }
 
         function navigateEntries(offset) {
