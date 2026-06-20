@@ -4,8 +4,8 @@ It is a digital diary that mimics a physical notebook where people record their 
 
 ## Preview
 
-![Closed diary cover]()
-![Open diary cover]()
+![Closed diary cover](https://cdn.discordapp.com/attachments/1517653758970953850/1517784378468597812/image.png?ex=6a378a5a&is=6a3638da&hm=e87bb43d9e84f6ffe4dc2be39c7e2814b119e0b8bd8a025feb9f486fed25d3c9)
+![Open diary cover](https://cdn.discordapp.com/attachments/1517653758970953850/1517785462222094407/image.png?ex=6a378b5d&is=6a3639dd&hm=660cde48db11f454925fdc3bfa592025fe4067df69f9a055933e6c82aaa1ebcd)
 ## How to use it
 
 Open the link to the website in a browser, and record your daily experiences in the date accordingly, and you can look back on your writings as time goes on.
